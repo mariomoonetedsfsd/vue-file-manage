@@ -2,9 +2,9 @@
 // import myTree from "./document-tree";
 export default {
   name: Document,
-  // components: {
-  //   myTree,
-  // },
+  components: {
+    myTree,
+  },
   data() {
     return {
       getdata: false,
@@ -96,8 +96,9 @@ export default {
   <div class="mx-3 my-1">
     <div class="row">
 
-          <!-- <div class="d-flex align-item-center mb-3">
+          <div class="d-flex align-item-center mb-3">
             <div class="col-2">S3路径</div>
+            // 显示路径，与input框绑定
             <input v-model="s3_path" class="form-control flex-grow-1 text-secondary" @click="chooseFolders">
             <b-modal id="folderModal" size="lg" hide-header-close title="文件存放位置">
               <div v-if="getdata" class="text-container ">
@@ -108,7 +109,7 @@ export default {
                 <b-button size="lg" variant="primary" @click="locationSured">确定</b-button>
               </template>
             </b-modal>
-          </div> -->
+          </div>
     </div>
   </div>
 </template>
