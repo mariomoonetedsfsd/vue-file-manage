@@ -33,8 +33,9 @@ export default {
         this.data.s3_path = this.picked;
         this.picked = "."
         this.$forceUpdate(); // 可以立即更新视图，跳过vue的响应机制
+        this.getdata = false;
       });
-      this.$bvModal.hide('folderModal');
+      // this.$bvModal.hide('folderModal');
     },
     // 弹窗下面的创建文件的按键
     creatFirstFolder(){
@@ -42,8 +43,9 @@ export default {
     },
     // 选择文件夹按键，即弹窗的显示等
     chooseFolders() {
-      this.$bvModal.show('folderModal')
+      // this.$bvModal.show('folderModal')
       this.updateTable(".")
+      this.getdata = true;
     },
     // 删除文件
     deleteFile(file) {
@@ -82,7 +84,7 @@ export default {
         .then((res) => {
           this.folders = res.data;
           console.log('eltree is', this.folders)
-          this.getdata = true;
+          // this.getdata = true;
         })
         .catch((err) => {
           console.log(err);
@@ -100,8 +102,10 @@ export default {
             <div class="col-2">S3路径</div>
             // 显示路径，与input框绑定
             <input v-model="s3_path" class="form-control flex-grow-1 text-secondary" @click="chooseFolders">
-            <b-modal id="folderModal" size="lg" hide-header-close title="文件存放位置">
-              <div v-if="getdata" class="text-container ">
+            // 在这里把b-modal组件与getdata双向绑定，来控制弹窗的展示；因为使用this.$bvModal时，同时上传多个文件，选择路径时会出现多个弹窗
+            // 因此在这这里使用双向绑定，避免组件间的调度出错
+            <b-modal v-model="getdata" size="lg" hide-header-close title="文件存放位置">
+              <div class="text-container ">
                 <myTree ref="myTreeRef" :treeData="folders" @deleteFile="deleteFile" @pathChanged="pathChanged" @newFolder="newFolder"/>
               </div>
               <template >
